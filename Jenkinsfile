@@ -8,6 +8,13 @@ pipeline {
                 sh 'cat trufflehog'
             }
         }
+        stage('SAST') {
+            steps {
+                sh 'rm mobsflog || true'
+                sh 'docker run opensecurity/mobsfscan --json InsecureBankv2.apk > mobsflog'
+                sh 'cat mobsflog'
+            }
+        }
         stage('build') {
             steps {
                 sh 'python3 --version'
